@@ -1,0 +1,18 @@
+.pricingpage {
+    .pricing-card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+  
+      .card-header {
+        background-color: #ffc107;
+        color: #343a40;
+        font-weight: bold;
+      }
+  
+      .table {
+        margin-bottom: 0;
+      }
+    }
+  }
