@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Button, Form, ListGroup, ListGroupItem, Nav, Accordion } from 'react-bootstrap';
 import pricingData from '../pricing-data.json';
+import pricingArray from './pricingDataComponent'
 
 interface PriceBuilderModalProps {
 	onClose: () => void;
 	name: string;
 }
+
+interface PricingItem {
+	name: string;
+	sizes: string[];
+	prices: (number | string)[];
+  }
 
 const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, name }) => {
 	// accrodion stuff
@@ -17,7 +24,7 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, name }) 
 	// -----------------------------------------------
 
 	// fetching json data stuff
-	const [data, setData] = useState<any>();
+	const [data, setData] = useState<PricingItem[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -54,9 +61,13 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, name }) 
 
 	useEffect(() => {
 		const fetchDataDirectly = async () => {
+			setIsLoading(true)
 			try {
-			  const importedData = await import('../pricing-data.json');
-			  setData(importedData.default);
+				pricingArray.forEach((element: any) => {
+					setData([element])
+				});
+				// setData(pricingArray)
+
 			  setIsLoading(false);
 			} catch (err:any) {
 			  setError(err);
@@ -64,10 +75,10 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, name }) 
 			}
 		  };
 		  fetchDataDirectly();
-	}, []);
+	}, [data]);
 
 	return (
-		<Modal show={true} onHide={onClose}>
+		<Modal show={true} className='modal-xl' onHide={onClose}>
 			<Modal.Header closeButton>
 				<Modal.Title>Price Builder</Modal.Title>
 			</Modal.Header>
@@ -103,10 +114,9 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, name }) 
 							</Accordion.Item>
 							))} */}
 
-								{data ? Object.keys(pricingData).forEach(key => (
-									<div>sam</div>
-
-								)) : ''}
+							{
+								data && !isLoading? <div> {data}</div> : ''
+							}
 								
 
 
