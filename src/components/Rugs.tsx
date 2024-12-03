@@ -46,7 +46,7 @@ function Rugs() {
 			</Col>
 
 			{/* Render the PriceBuilderModal when the state is true */}
-			{showModal && <PriceBuilderModal name={'Rugs'} onClose={handleCloseModal} />}
+			{showModal && <PriceBuilderModal name={0} onClose={handleCloseModal} />}
 		</>
 	);
 }

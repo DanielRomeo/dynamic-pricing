@@ -4,7 +4,7 @@ import pricingArray from './pricingDataComponent';
 
 interface PriceBuilderModalProps {
 	onClose: () => void;
-	name: string;
+	name: number;
 }
 
 interface PricingItem {
@@ -27,6 +27,9 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, name }) 
 		name: '',
 		email: '',
 		phone: '',
+		billToAddress: '',
+		additionalNotes: '',
+		paymentTerms: ''
 	});
 
 	// useEffect to fetch data:
@@ -120,7 +123,7 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, name }) 
 					<>	
 						<p>Page 1/2</p>
 						<h4>Select items: </h4>
-						<Accordion defaultActiveKey="0">
+						<Accordion defaultActiveKey={[String(name)]} alwaysOpen  flush>
 							{pricingData?.length > 0 && !isLoading ? (
 								<div>
 									{pricingData.map((element, index) => (
@@ -169,7 +172,7 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, name }) 
 					<>
 					<Form onSubmit={handleSubmit}>
 						<Form.Group controlId="formName">
-							<Form.Label>Name</Form.Label>
+							<Form.Label>Full name</Form.Label>
 							<Form.Control
 								type="text"
 								name="name"
@@ -189,7 +192,7 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, name }) 
 							/>
 						</Form.Group>
 						<Form.Group controlId="formPhone">
-							<Form.Label>Phone</Form.Label>
+							<Form.Label>Cell phone number</Form.Label>
 							<Form.Control
 								type="tel"
 								name="phone"
@@ -198,6 +201,46 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, name }) 
 								required
 							/>
 						</Form.Group>
+
+						<Form.Group controlId="formBillToAddress">
+							<Form.Label>Bill to, Address</Form.Label>
+							<Form.Control
+								type="textarea"
+								name="billToAddress"
+								value={formData.billToAddress}
+								onChange={handleInputChange}
+								required
+							/>
+						</Form.Group>
+
+						{/* Addtional notes */}
+						<Form.Group controlId="formAdditionalNotes">
+							<Form.Label>Additional Notes</Form.Label>
+							<Form.Control
+								type="textarea"
+								name="additionalNotes"
+								value={formData.additionalNotes}
+								onChange={handleInputChange}
+								required
+							/>
+						</Form.Group>
+
+						{/* Payment terms */}
+						<Form.Group controlId="formPaymentTerms">
+							<Form.Label>Payment Terms</Form.Label>
+							<Form.Control
+								type="textarea"
+								name="paymentTerms"
+								value={formData.paymentTerms}
+								onChange={handleInputChange}
+								required
+							/>
+						</Form.Group>
+
+						
+
+
+
 						<div className="text-right">
 							<br/>
 							<Button onClick={handlePrevStep}>Prev</Button>
