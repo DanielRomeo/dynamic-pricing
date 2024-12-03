@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Button, Form, ListGroup, ListGroupItem, Nav, Accordion } from 'react-bootstrap';
-import pricingData from '../pricing-data.json';
-import pricingArray from './pricingDataComponent'
+import { Modal, Button, Form, Accordion, FormCheck } from 'react-bootstrap';
+import pricingArray from './pricingDataComponent';
 
 interface PriceBuilderModalProps {
 	onClose: () => void;
@@ -12,37 +11,79 @@ interface PricingItem {
 	name: string;
 	sizes: string[];
 	prices: (number | string)[];
-  }
+}
 
 const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, name }) => {
-	// accrodion stuff
-	const [activeIndex, setActiveIndex] = useState(null);
+	// state:
+	const [pricingData, setPricingData] = useState<any[]>([]);
+	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState<any>(null);
+	const [selectedItems, setSelectedItems] = useState<{[key: string]: string[]}>({});
+	const [totalPrice, setTotalPrice] = useState(0);
 
-	const handleSelect = (selectedIndex: any) => {
-		setActiveIndex(selectedIndex === activeIndex ? null : selectedIndex);
-	};
-	// -----------------------------------------------
-
-	// fetching json data stuff
-	const [data, setData] = useState<PricingItem[]>([]);
-	const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-	const [selectedItems, setSelectedItems] = useState<string[]>([]);
+	// pagination and form data state:
+	const [currentStep, setCurrentStep] = useState(1);
 	const [formData, setFormData] = useState({
 		name: '',
 		email: '',
 		phone: '',
 	});
-	const [currentStep, setCurrentStep] = useState(1);
 
-	const handleItemSelect = (item: string) => {
-		if (selectedItems.includes(item)) {
-			setSelectedItems(selectedItems.filter((i) => i !== item));
-		} else {
-			setSelectedItems([...selectedItems, item]);
-		}
+	// useEffect to fetch data:
+	useEffect(() => {
+		const fetchPricingData = async () => {
+			setIsLoading(true);
+			try {
+				setPricingData(pricingArray);
+				setIsLoading(false);
+				console.log("Pricing data loaded", pricingData);
+			} catch (err) {
+				setError(err);
+				setIsLoading(false);
+			}
+		};
+		fetchPricingData();
+	}, []);
+
+	// Calculate total price whenever selected items change
+	useEffect(() => {
+		let total = 0;
+		pricingData.forEach(element => {
+			const categoryName = element.name;
+			const selectedSizes = selectedItems[categoryName] || [];
+			
+			selectedSizes.forEach(selectedSize => {
+				const index = element.sizes 
+					? element.sizes.indexOf(selectedSize) 
+					: element.bedrooms.indexOf(selectedSize);
+				
+				if (index !== -1) {
+					const price = typeof element.prices[index] === 'string'
+						? parseFloat(element.prices[index])
+						: element.prices[index];
+					total += price;
+				}
+			});
+		});
+
+		setTotalPrice(total);
+	}, [selectedItems, pricingData]);
+
+	// handle checkbox state:
+	const handleItemSelect = (categoryName: string, size: string) => {
+		setSelectedItems(prev => {
+			const currentCategoryItems = prev[categoryName] || [];
+			const updatedCategoryItems = currentCategoryItems.includes(size)
+				? currentCategoryItems.filter(item => item !== size)
+				: [...currentCategoryItems, size];
+
+			return {
+				...prev,
+				[categoryName]: updatedCategoryItems
+			};
+		});
 	};
+
 	const handleInputChange = (
 		event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 	) => {
@@ -51,94 +92,81 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, name }) 
 			[event.target.name]: event.target.value,
 		});
 	};
+
 	const handleSubmit = (event: React.FormEvent) => {
 		event.preventDefault();
-		// Handle form submission, e.g., send data to server
 		console.log('Selected items:', selectedItems);
 		console.log('Form data:', formData);
 		setCurrentStep(2);
 	};
 
-	useEffect(() => {
-		const fetchDataDirectly = async () => {
-			setIsLoading(true)
-			try {
-				pricingArray.forEach((element: any) => {
-					setData([element])
-				});
-				// setData(pricingArray)
-
-			  setIsLoading(false);
-			} catch (err:any) {
-			  setError(err);
-			  setIsLoading(false);
-			}
-		  };
-		  fetchDataDirectly();
-	}, [data]);
+	// Handle going back to previous step
+	const handlePrevStep = () => {
+		setCurrentStep(1);
+	};
 
 	return (
-		<Modal show={true} className='modal-xl' onHide={onClose}>
+		<Modal show={true} className="modal-xl" onHide={onClose}>
 			<Modal.Header closeButton>
 				<Modal.Title>Price Builder</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
+				{/* Total Price Display */}
+				<div className="alert alert-info text-center mb-3">
+					<strong>Total Price: ${totalPrice.toFixed(2)}</strong>
+				</div>
+
 				{currentStep === 1 && (
-					<>
-						<h4>Select items:</h4>
-						<Accordion
-							defaultActiveKey="0"
-							activeKey={activeIndex}
-							onSelect={handleSelect}
-						>
-
-							
-								
-
-							{/* {Object.keys(pricingData).forEach((section) => (
-								
-								<Accordion.Item eventKey={section}>
-								<Accordion.Header>{section}</Accordion.Header>
-								<Accordion.Body>
-								{pricingData.rugs.sizes.map((size) => (
-									<ListGroupItem
-									key={size}
-									// active={selectedItems[`Rugs:${size}`]}
-									// onClick={() => handleItemSelect('Rugs', size)}
-									style={{ cursor: 'pointer' }}
-									>
-									{size} - R {pricingData.rugs.prices[pricingData.rugs.sizes.indexOf(size)].toFixed(2)}
-									</ListGroupItem>
-								))}
-								</Accordion.Body>
-							</Accordion.Item>
-							))} */}
-
-							{
-								data && !isLoading? <div> {data}</div> : ''
-							}
-								
-
-
-							{/* <Accordion.Item eventKey="0">
-								<Accordion.Header>Accordion Item #1</Accordion.Header>
-								<Accordion.Body>stuff</Accordion.Body>
-							</Accordion.Item>
-
-							<Accordion.Item eventKey="1">
-								<Accordion.Header>Accordion Item #2</Accordion.Header>
-								<Accordion.Body>
-									Duis aute irure dolor in reprehenderit in voluptate velit esse
-									cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-									cupidatat non proident, sunt in culpa qui officia deserunt
-									mollit anim id est laborum.  
-								</Accordion.Body>
-							</Accordion.Item> */}
+					<>	
+						<p>Page 1/2</p>
+						<h4>Select items: </h4>
+						<Accordion defaultActiveKey="0">
+							{pricingData?.length > 0 && !isLoading ? (
+								<div>
+									{pricingData.map((element, index) => (
+										<Accordion.Item key={index} eventKey={String(index)}>
+											<Accordion.Header>{element.name}</Accordion.Header>
+											<Accordion.Body>
+												{element.sizes ? (
+													element.sizes.map((size:string, i:number) => (
+														<FormCheck 
+															key={i}
+															type="checkbox"
+															id={`${element.name}-${size}`}
+															label={`${size}: R${element.prices[i]}`}
+															checked={(selectedItems[element.name] || []).includes(size)}
+															onChange={() => handleItemSelect(element.name, size)}
+														/>
+													))
+												) : (
+													element.bedrooms?.map((bedroom:string, i:number) => (
+														<FormCheck 
+															key={i}
+															type="checkbox"
+															id={`${element.name}-${bedroom}`}
+															label={`${bedroom} Bedrooms: R${element.prices[i]}`}
+															checked={(selectedItems[element.name] || []).includes(bedroom)}
+															onChange={() => handleItemSelect(element.name, bedroom)}
+														/>
+													))
+												)}
+											</Accordion.Body>
+										</Accordion.Item>
+									))}
+								</div>
+							) : (
+								'...loading'
+							)}
 						</Accordion>
+
+						<br/>
+
+						<Button onClick={handleSubmit}>Next!</Button>
 					</>
 				)}
 
 				{currentStep === 2 && (
+					<>
 					<Form onSubmit={handleSubmit}>
 						<Form.Group controlId="formName">
 							<Form.Label>Name</Form.Label>
@@ -171,6 +199,8 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, name }) 
 							/>
 						</Form.Group>
 						<div className="text-right">
+							<br/>
+							<Button onClick={handlePrevStep}>Prev</Button>
 							<Button variant="secondary" onClick={onClose}>
 								Cancel
 							</Button>
@@ -179,6 +209,8 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, name }) 
 							</Button>
 						</div>
 					</Form>
+					
+					</>
 				)}
 			</Modal.Body>
 		</Modal>
