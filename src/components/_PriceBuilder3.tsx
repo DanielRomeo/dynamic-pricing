@@ -6,11 +6,12 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {Accordion, FormCheck} from 'react-bootstrap';
-
+import InvoiceGeneratorModal from './InvoiceGenerator';
 
 
 interface PriceBuilderModalProps {
 	onClose: () => void;
+    onDataRecieve: (data: any[])=> void; // this takes an array of objects bro
 	name: number;
 }
 
@@ -52,13 +53,23 @@ const validationSchema = yup.object({
         .required('Payment terms must be selected')
 });
 
-const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, name }) => {
+const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRecieve, name }) => {
 	// state:
 	const [pricingData, setPricingData] = useState<any[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<any>(null);
 	const [selectedItems, setSelectedItems] = useState<{[key: string]: string[]}>({});
 	const [totalPrice, setTotalPrice] = useState(0);
+
+    // Invoice modal display code:
+    const [showModal, setShowModal] = useState(false);
+    const handleOpenModal = () => {
+        setShowModal(true);
+    };
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
+    // ---------------------------------------------
 
 	// pagination and form data state:
 	const [currentStep, setCurrentStep] = useState(1);
@@ -140,19 +151,50 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, name }) 
 		setCurrentStep(2);
 	};
 
-	const onSubmitFinalStep = (data: FormData) => {
-		console.log('Selected items:', selectedItems);
-		console.log('Form data:', data);
-		// td: Add your submit logic here
-		onClose();
-	};
+	
+    const onSubmitFinalStep = (data: FormData) => {
+        const selectedItemsWithPrices = pricingData.flatMap(element => {
+            const categoryName = element.name;
+            const selectedSizes = selectedItems[categoryName] || [];
+            
+            return selectedSizes.map(selectedSize => {
+                const index = element.sizes 
+                    ? element.sizes.indexOf(selectedSize) 
+                    : element.bedrooms.indexOf(selectedSize);
+                
+                const price = typeof element.prices[index] === 'string'
+                    ? parseFloat(element.prices[index])
+                    : element.prices[index];
+                
+                return {
+                    category: categoryName,
+                    size: selectedSize,
+                    price: price
+                };
+            });
+        });
+    
+        console.log('Selected items with prices:', selectedItemsWithPrices);
+        console.log('Form data:', data);
+        console.log('Total Price:', totalPrice);
+    
+        // Your submit logic here
+        // For example, you might want to send this data to an API
+        onDataRecieve([selectedItems, data, totalPrice])
+
+        onClose();
+       
+    };
 
 	// Handle going back to previous step
 	const handlePrevStep = () => {
 		setCurrentStep(1);
 	};
 
+   
+
 	return (
+        <>
 		<Modal show={true} className="modal-xl" onHide={onClose}>
 			<Modal.Header closeButton>
 				<Modal.Title>Price Builder</Modal.Title>
@@ -353,7 +395,12 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, name }) 
                 </Form>
                 )}
 			</Modal.Body>
+
+            
+
 		</Modal>
+        {showModal && <InvoiceGeneratorModal orderId={'hello'} onClose={handleCloseModal} />}
+        </>
 	);
 };
 
