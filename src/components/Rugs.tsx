@@ -9,7 +9,7 @@ import InvoiceGeneratorModal from './InvoiceGenerator';
 function Rugs() {
 
 	// child data from the priceBuilder(since priceBuilder is the child of this component)
-	const [childData, setChildData] = useState<any[]>(); 
+	const [childData, setChildData] = useState<any[]>();  // could create a type for this but dont have time...
 
 	// Modal code for the 2 modals: PriceBuilder & InvoiceGenerator
 	const [showModal, setShowModal] = useState<boolean>(false);
@@ -21,10 +21,10 @@ function Rugs() {
 		setShowModal(false);
 	};
 	const handleOpenModalInvoiceGen = () => {
-		setShowModal(true);
+		setShowModalInvoiceGen(true);
 	};
 	const handleCloseModalInvoiceGen = () => {
-		setShowModal(false);
+		setShowModalInvoiceGen(false);
 	};
 
 	// handle the data reciveved from PriceBuilderModal:
@@ -66,7 +66,7 @@ function Rugs() {
 
 			{/* Render the PriceBuilderModal when the state is true */}
 			{showModal && <PriceBuilderModal name={0} onDataRecieve={handleChildData} onClose={handleCloseModal} />}
-			{showModalInvoiceGen && <InvoiceGeneratorModal orderId={'1'}  onClose={handleCloseModalInvoiceGen} />}
+			{showModalInvoiceGen && childData && <InvoiceGeneratorModal data={childData}  onClose={handleCloseModalInvoiceGen} />}
 			
 		</>
 	);

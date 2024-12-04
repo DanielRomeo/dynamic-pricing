@@ -399,7 +399,6 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
             
 
 		</Modal>
-        {showModal && <InvoiceGeneratorModal orderId={'hello'} onClose={handleCloseModal} />}
         </>
 	);
 };

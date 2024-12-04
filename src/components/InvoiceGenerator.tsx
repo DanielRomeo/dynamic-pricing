@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Table, Button, Modal, Spinner } from 'react-bootstrap';
+import { Container, Row, Col, Card, Table, Button, Modal, Spinner, ModalBody } from 'react-bootstrap';
 import axios from 'axios';
 
 
@@ -22,30 +22,30 @@ due date(date of service rendering)
 */
 
 interface InvoiceModalProps {
-    orderId: string;
+    data: any[];
     onClose: () => void;
 }
 
-const InvoiceGeneratorModal: React.FC<InvoiceModalProps> = ({ orderId, onClose }) => {
+const InvoiceGeneratorModal: React.FC<InvoiceModalProps> = ({ data, onClose }) => {
     const [pdfUrl, setPdfUrl] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchInvoice = async () => {
-            try {
-                const response = await axios.get(`/api/invoices/${orderId}`, {
-                    responseType: 'blob'
-                });
+            // try {
+            //     const response = await axios.get(`/api/invoices/${orderId}`, {
+            //         responseType: 'blob'
+            //     });
 
-                const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
-                const url = URL.createObjectURL(pdfBlob);
-                setPdfUrl(url);
-                setIsLoading(false);
-            } catch (err) {
-                setError('Failed to load invoice');
-                setIsLoading(false);
-            }
+            //     const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
+            //     const url = URL.createObjectURL(pdfBlob);
+            //     setPdfUrl(url);
+            //     setIsLoading(false);
+            // } catch (err) {
+            //     setError('Failed to load invoice');
+            //     setIsLoading(false);
+            // }
         };
 
         fetchInvoice();
@@ -54,15 +54,15 @@ const InvoiceGeneratorModal: React.FC<InvoiceModalProps> = ({ orderId, onClose }
         return () => {
             if (pdfUrl) URL.revokeObjectURL(pdfUrl);
         };
-    }, [orderId]);
+    }, []);
 
     const handleDownload = () => {
-        if (pdfUrl) {
-            const link = document.createElement('a');
-            link.href = pdfUrl;
-            link.download = `invoice_${orderId}.pdf`;
-            link.click();
-        }
+        // if (pdfUrl) {
+        //     const link = document.createElement('a');
+        //     link.href = pdfUrl;
+        //     link.download = `invoice_${orderId}.pdf`;
+        //     link.click();
+        // }
     };
 
     return (
@@ -70,7 +70,7 @@ const InvoiceGeneratorModal: React.FC<InvoiceModalProps> = ({ orderId, onClose }
             <Modal.Header closeButton>
                 <Modal.Title>Invoice Details</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
+            {/* <Modal.Body>
                 {isLoading ? (
                     <div className="text-center">
                         <Spinner animation="border" />
@@ -88,7 +88,13 @@ const InvoiceGeneratorModal: React.FC<InvoiceModalProps> = ({ orderId, onClose }
                         />
                     </div>
                 )}
-            </Modal.Body>
+            </Modal.Body> */}
+
+			<Modal.Body>
+				{
+					JSON.stringify(data)
+				}
+			</Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={onClose}>
                     Close
