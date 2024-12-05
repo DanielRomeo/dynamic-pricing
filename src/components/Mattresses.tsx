@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Col, Card, Table, Button } from 'react-bootstrap';
 import pricingData from '../pricing-data.json';
 import PriceBuilderModal from './_PriceBuilder2';
@@ -38,9 +38,9 @@ function Mattresses() {
 					</Card.Body>
 
 					<Card.Footer>
-							<Button onClick={handleOpenModal}>Book now!</Button>
-						</Card.Footer>
-					</Card>
+						<Button onClick={handleOpenModal}>Book now!</Button>
+					</Card.Footer>
+				</Card>
 			</Col>
 
 			{showModal && <PriceBuilderModal name={1} onClose={handleCloseModal} />}

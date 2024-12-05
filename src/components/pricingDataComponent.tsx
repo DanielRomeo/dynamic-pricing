@@ -1,7 +1,12 @@
 let pricingArray = [
 	{
 		name: 'rugs',
-		sizes: ['160cm (W) x 230xm (L)', '200cm (W) x 290xm (L)', '250cm (W) x 350xm (L)', '300cm (W) x 400xm (L)'],
+		sizes: [
+			'160cm (W) x 230xm (L)',
+			'200cm (W) x 290xm (L)',
+			'250cm (W) x 350xm (L)',
+			'300cm (W) x 400xm (L)',
+		],
 		prices: [350, 400, 500, 550],
 	},
 	{
@@ -26,8 +31,15 @@ let pricingArray = [
 	},
 	{
 		name: 'windows',
-		sizes: ['Single hung or ground floor', 'Double hung or second floor','Single frame on second floor', 'Double frame on second floor', 'Sliding door', 'Any other window'],
-		prices: [100, 140, 150,180, 220,  'Contact us'],
+		sizes: [
+			'Single hung or ground floor',
+			'Double hung or second floor',
+			'Single frame on second floor',
+			'Double frame on second floor',
+			'Sliding door',
+			'Any other window',
+		],
+		prices: [100, 140, 150, 180, 220, 'Contact us'],
 	},
 	{
 		name: 'cars',

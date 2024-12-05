@@ -11,7 +11,7 @@ function App() {
 			<h1 className="text-center my-5">Check out our prices</h1>
 			<Row>
 				<Rugs></Rugs>
-				<Mattresses></Mattresses>
+				{/* <Mattresses></Mattresses> */}
 			</Row>
 		</Container>
 	);
