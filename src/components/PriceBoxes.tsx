@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Table, Button } from 'react-bootstrap';
-import pricingData from '../pricing-data.json';
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import styles from '../styles/pricing.module.scss';
-// import PriceBuilderModal from './_PriceBuilder';
 import PriceBuilderModal from './_PriceBuilder3';
 import InvoiceGeneratorModal from './InvoiceGenerator';
-
 import pricingArray from './pricingDataComponent';
 
-function Rugs() {
+function PriceBoxes() {
 	// child data from the priceBuilder(since priceBuilder is the child of this component)
 	const [childData, setChildData] = useState<any[]>(); // could create a type for this but dont have time...
 	const [isLoading, setIsLoading] = useState(false);
@@ -46,7 +43,6 @@ function Rugs() {
 			try {
 				setPricingData(pricingArray);
 				setIsLoading(false);
-				// console.log("Pricing data loaded", pricingData);
 			} catch (err) {
 				setError(err);
 				setIsLoading(false);
@@ -124,4 +120,4 @@ function Rugs() {
 	);
 }
 
-export default Rugs;
+export default PriceBoxes;
