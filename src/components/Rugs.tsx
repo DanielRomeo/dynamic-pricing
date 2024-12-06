@@ -14,15 +14,16 @@ function Rugs() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<any>(null);
 	const [pricingData, setPricingData] = useState<any[]>([]);
+    const [activeModalIndex, setActiveModalIndex] = useState<number | null>(null);
+
 
 	// Modal code for the 2 modals: PriceBuilder & InvoiceGenerator
-	const [showModal, setShowModal] = useState<boolean>(false);
 	const [showModalInvoiceGen, setShowModalInvoiceGen] = useState<boolean>(false);
-	const handleOpenModal = () => {
-		setShowModal(true);
+	const handleOpenModal = (index: number) => {
+		setActiveModalIndex(index)
 	};
 	const handleCloseModal = () => {
-		setShowModal(false);
+		setActiveModalIndex(null);
 	};
 	const handleOpenModalInvoiceGen = () => {
 		setShowModalInvoiceGen(true);
@@ -55,64 +56,71 @@ function Rugs() {
 	}, []);
 
 	return (
-		<Row>
-			{pricingData.map((element, index: number) => (
-				<>
-					<Col md={4} lg={4} sm={12}>
-						<Card className={styles['pricing-card']}>
-							<Card.Header>{element.name}</Card.Header>
-							{/* We render a different card body depending on if the card has sizes or bedroom numbers */}
-							
-							<Card.Body>
-								<Container>
-									{element.sizes ? (
-										<Row>
-											<Col md={6}>Sizes</Col>
-											<Col md={6}>Prices</Col>
-											{element.sizes.map((size: string, i: number) => (
-												<Row>
-													<Col md={6}>{size}</Col>
-													<Col md={6}>{element.prices[i]}</Col>
-												</Row>
-											))}
-										</Row>
-									) : (
-										<Row>
-											<Col md={6}>Bedrooms</Col>
-											<Col md={6}>Prices</Col>
-											{element.bedrooms?.map((bedroom: string, i: number) => (
-												<Row>
-													<Col md={6}>{bedroom}</Col>
-													<Col md={6}>{element.prices[i]}</Col>
+
+		<div>
+			<Row>
+				{pricingData.map((element, index: number) => (
+					
+						<Col md={4} lg={4} sm={12}>
+							<Card className={styles['pricing-card']}>
+								<Card.Header>{element.name}</Card.Header>
+								{/* We render a different card body depending on if the card has sizes or bedroom numbers */}
+								
+								<Card.Body>
+									<Container>
+										{element.sizes ? (
+											<Row>
+												<Col md={6}>Sizes</Col>
+												<Col md={6}>Prices</Col>
+												{element.sizes.map((size: string, i: number) => (
+													<Row>
+														<Col md={6}>{size}</Col>
+														<Col md={6}>{element.prices[i]}</Col>
+													</Row>
+												))}
 											</Row>
-											))}
-										</Row>
-									)}
-								</Container>
-							</Card.Body>
+										) : (
+											<Row>
+												<Col md={6}>Bedrooms</Col>
+												<Col md={6}>Prices</Col>
+												{element.bedrooms?.map((bedroom: string, i: number) => (
+													<Row>
+														<Col md={6}>{bedroom}</Col>
+														<Col md={6}>{element.prices[i]}</Col>
+												</Row>
+												))}
+											</Row>
+										)}
+									</Container>
+								</Card.Body>
 
-							<Card.Footer>
-								<Button onClick={()=> handleOpenModal()}>Book now!</Button>
-							</Card.Footer>
-						</Card>
+								<Card.Footer>
+									<Button onClick={()=> handleOpenModal(index)}>Book now!</Button>
+								</Card.Footer>
+							</Card>
+
+							{activeModalIndex === index && (
+								<PriceBuilderModal
+									categoryId={index.toString()}
+									onDataRecieve={handleChildData}
+									onClose={handleCloseModal}
+								/>
+							)}
 					</Col>
+				))}
+						
+			</Row>
 
-					{showModal && (
-						<PriceBuilderModal
-							categoryId={index.toString()}
-							onDataRecieve={handleChildData}
-							onClose={handleCloseModal}
-						/>
-					)}
-					{showModalInvoiceGen && childData && (
-						<InvoiceGeneratorModal
-							data={childData}
-							onClose={handleCloseModalInvoiceGen}
-						/>
-					)}
-				</>
-			))}
-		</Row>
+			<Row>
+				
+				{showModalInvoiceGen && childData && (
+					<InvoiceGeneratorModal
+						data={childData}
+						onClose={handleCloseModalInvoiceGen}
+					/>
+				)}
+			</Row>
+		</div>
 	);
 }
 

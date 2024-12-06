@@ -54,7 +54,7 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 	const [error, setError] = useState<any>(null);
 	const [selectedItems, setSelectedItems] = useState<{ [key: string]: string[] }>({});
 	const [totalPrice, setTotalPrice] = useState(0);
-	const [category, setCategory] = useState(categoryId);
+	const [category, setCategory] = useState<string>(categoryId);
 
 	// Invoice modal display code:
 	const [showModal, setShowModal] = useState(false);
@@ -88,7 +88,6 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 
 	// useEffect to fetch data:
 	useEffect(() => {
-		// setCategory(categoryId)
 		console.log(category)
 		const fetchPricingData = async () => {
 			setIsLoading(true);
@@ -206,6 +205,7 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 							<Form onSubmit={onSubmitFirstStep}>
 								<p>Page 1/2</p>
 								<h4>Select items: </h4>
+								
 								<Accordion defaultActiveKey={[`${category}`]}>
 									{pricingData?.length > 0 && !isLoading ? (
 										<div>
