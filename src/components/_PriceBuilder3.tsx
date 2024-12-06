@@ -11,7 +11,7 @@ import InvoiceGeneratorModal from './InvoiceGenerator';
 interface PriceBuilderModalProps {
 	onClose: () => void;
 	onDataRecieve: (data: any[]) => void; // this takes an array of objects bro
-	name: number;
+	categoryId: string;
 }
 
 interface PricingItem {
@@ -47,13 +47,14 @@ const validationSchema = yup.object({
 		.required('Payment terms must be selected'),
 });
 
-const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRecieve, name }) => {
+const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRecieve, categoryId }) => {
 	// state:
 	const [pricingData, setPricingData] = useState<any[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<any>(null);
 	const [selectedItems, setSelectedItems] = useState<{ [key: string]: string[] }>({});
 	const [totalPrice, setTotalPrice] = useState(0);
+	const [category, setCategory] = useState(categoryId);
 
 	// Invoice modal display code:
 	const [showModal, setShowModal] = useState(false);
@@ -87,12 +88,14 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 
 	// useEffect to fetch data:
 	useEffect(() => {
+		// setCategory(categoryId)
+		console.log(category)
 		const fetchPricingData = async () => {
 			setIsLoading(true);
 			try {
-				// setPricingData(pricingArray);
+				setPricingData(pricingArray);
 				setIsLoading(false);
-				console.log('Pricing data loaded', pricingData);
+				// console.log('Pricing data loaded', pricingData);
 			} catch (err) {
 				setError(err);
 				setIsLoading(false);
@@ -103,6 +106,7 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 
 	// Calculate total price whenever selected items change
 	useEffect(() => {
+		// console.log(props.categoryId)
 		let total = 0;
 		pricingData.forEach((element) => {
 			const categoryName = element.name;
@@ -197,12 +201,12 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 						<strong>Total Price: R{totalPrice.toFixed(2)}</strong>
 					</div>
 
-					{currentStep === 1 && (
+					{currentStep === 1 && category && (
 						<>
 							<Form onSubmit={onSubmitFirstStep}>
 								<p>Page 1/2</p>
 								<h4>Select items: </h4>
-								<Accordion defaultActiveKey="0">
+								<Accordion defaultActiveKey={[`${category}`]}>
 									{pricingData?.length > 0 && !isLoading ? (
 										<div>
 											{pricingData.map((element, index) => (

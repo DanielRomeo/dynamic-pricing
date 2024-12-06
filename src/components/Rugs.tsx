@@ -33,7 +33,7 @@ function Rugs() {
 
 	// handle the data reciveved from PriceBuilderModal:
 	const handleChildData = (data: any[]) => {
-		console.log(data);
+		// console.log(data);
 		setChildData(data);
 		setShowModalInvoiceGen(true);
 	};
@@ -56,23 +56,13 @@ function Rugs() {
 
 	return (
 		<Row>
-			{pricingData.map((element, index) => (
+			{pricingData.map((element, index: number) => (
 				<>
-					{/* {element.sizes ? (
-					element.sizes.map((size:string, i:number) => (
-						<div>{element.name}</div>
-					))
-				) : (
-					element.bedrooms?.map((bedroom:string, i:number) => (
-						<div>{element.name}</div>
-					))
-				)} */}
-
 					<Col md={4} lg={4} sm={12}>
 						<Card className={styles['pricing-card']}>
 							<Card.Header>{element.name}</Card.Header>
 							{/* We render a different card body depending on if the card has sizes or bedroom numbers */}
-
+							
 							<Card.Body>
 								<Container>
 									{element.sizes ? (
@@ -102,14 +92,14 @@ function Rugs() {
 							</Card.Body>
 
 							<Card.Footer>
-								<Button onClick={handleOpenModal}>Book now!</Button>
+								<Button onClick={()=> handleOpenModal()}>Book now!</Button>
 							</Card.Footer>
 						</Card>
 					</Col>
 
 					{showModal && (
 						<PriceBuilderModal
-							name={0}
+							categoryId={index.toString()}
 							onDataRecieve={handleChildData}
 							onClose={handleCloseModal}
 						/>
