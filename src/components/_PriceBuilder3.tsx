@@ -301,6 +301,7 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 										<Form.Label>Full Name</Form.Label>
 										<Form.Control
 											{...field}
+											className={`mb-3 ${styles.formField}`}
 											type="text"
 											placeholder="Enter full name"
 											isInvalid={!!errors.name}
@@ -320,6 +321,7 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 										<Form.Label>Email Address</Form.Label>
 										<Form.Control
 											{...field}
+											className={`mb-3 ${styles.formField}`}
 											type="email"
 											placeholder="Enter email"
 											isInvalid={!!errors.email}
@@ -338,6 +340,7 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 									<Form.Group controlId="formPhone" className="mb-3">
 										<Form.Label>Phone Number</Form.Label>
 										<Form.Control
+										className={`mb-3 ${styles.formField}`}
 											{...field}
 											type="tel"
 											placeholder="Enter 10-digit phone number"
@@ -354,9 +357,10 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 								name="billToAddress"
 								control={control}
 								render={({ field }) => (
-									<Form.Group controlId="formBillToAddress" className="mb-3">
+									<Form.Group controlId="formBillToAddress" className={`mb-3 `}>
 										<Form.Label>Billing Address</Form.Label>
 										<Form.Control
+											className={`mb-3 ${styles.formField}`}
 											{...field}
 											as="textarea"
 											rows={3}
@@ -377,6 +381,7 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 									<Form.Group controlId="formAdditionalNotes" className="mb-3">
 										<Form.Label>Additional Notes (Optional)</Form.Label>
 										<Form.Control
+										className={`mb-3 ${styles.formField}`}
 											{...field}
 											as="textarea"
 											rows={3}
@@ -392,7 +397,8 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 								render={({ field }) => (
 									<Form.Group controlId="formPaymentTerms" className="mb-3">
 										<Form.Label>Payment Terms</Form.Label>
-										<Form.Select {...field} isInvalid={!!errors.paymentTerms}>
+										<Form.Select {...field} isInvalid={!!errors.paymentTerms}
+										className={`mb-3 ${styles.formSelect}`}>
 											<option value="">Select Payment Terms</option>
 											<option value="EFT">EFT</option>
 											<option value="Cash">Cash</option>

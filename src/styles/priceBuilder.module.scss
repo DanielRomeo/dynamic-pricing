@@ -51,6 +51,8 @@
 
         &:hover{
             box-shadow: 0 4px 15px rgba(235, 180, 12, 0.5);
+            background-color: #EAB613;
+            border: 1px solid #EAB613;
         }
     }
     .secondPageCancelButton{
@@ -61,8 +63,34 @@
 
         &:hover{
             box-shadow: 0 4px 15px rgba(80, 77, 70, 0.5);
-
+            background-color: black;
         }
     }
+
+    // Form:
+    .formField{
+        border: 1px solid black;
+
+        &:focus{
+            box-shadow: 0 1px 10px #EAB613;
+            border: 1px solid #EAB613;
+        }
+    }
+    .formSelect{
+        border: 1px solid black;
+
+        &:focus{
+            box-shadow: 0 1px 10px #EAB613;
+            border: 1px solid #EAB613;
+        }
+    }
+}
+
+.form-control.is-invalid, .was-validated .form-control:invalid {
+    border-color: var(--bs-form-invalid-border-color);
+    padding-right: calc(1.5em + 0.75rem);
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
 }
 
