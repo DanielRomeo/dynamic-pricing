@@ -284,7 +284,7 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 
 								<br />
 
-								<Button type="submit" variant="primary">
+								<Button className={styles.firstPageNextButton} type="submit" variant="primary">
 									Next
 								</Button>
 							</Form>
@@ -405,13 +405,13 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 							/>
 
 							<div className="d-flex justify-content-between">
-								<Button variant="secondary" onClick={() => setCurrentStep(1)}>
+								<Button className={styles.secondPagePreviousButton} variant="secondary" onClick={() => setCurrentStep(1)}>
 									Previous
 								</Button>
-								<Button variant="danger" onClick={onClose}>
+								<Button className={styles.secondPageCancelButton}  onClick={onClose}>
 									Cancel
 								</Button>
-								<Button type="submit" variant="primary">
+								<Button className={styles.secondPageNextButton} type="submit" variant="primary">
 									Submit Order
 								</Button>
 							</div>

@@ -16,12 +16,11 @@
             }
         }
 
-
         .accordion {
             .accordionItem {
                 .accordionHeader {
                     button {
-                        border-radius: 0px;
+                        // border-radius: 1px;
                         padding: 15px;
                         display: flex;
                         align-items: center;
@@ -41,6 +40,28 @@
                    // no styling needed yet
                 }
             }
+        }
+    }
+
+    .firstPageNextButton, .secondPageNextButton, .secondPagePreviousButton{
+        background-color: #EAB613;
+        border-radius: 6px;
+        border: 1px solid #EAB613;
+        color: white;
+
+        &:hover{
+            box-shadow: 0 4px 15px rgba(235, 180, 12, 0.5);
+        }
+    }
+    .secondPageCancelButton{
+        background-color: black;
+        border-radius: 6px;
+        border: 1px solid black;
+        color: white;
+
+        &:hover{
+            box-shadow: 0 4px 15px rgba(80, 77, 70, 0.5);
+
         }
     }
 }
