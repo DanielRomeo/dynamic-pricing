@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import {
-	Container,
-	Row,
-	Col,
-	Card,
-	Table,
 	Button,
 	Modal,
 	Spinner,
-	ModalBody,
 } from 'react-bootstrap';
+import { v4 as uuidv4 } from 'uuid'; // ES Module
+
 import axios from 'axios';
 import { MY_ENV_VAR } from '../config/config';
 import styles from '../styles/invoiceGenerator.module.scss'
@@ -43,6 +39,9 @@ const InvoiceGeneratorModal: React.FC<InvoiceModalProps> = ({ data, onClose }) =
 	const [loading, setLoading] = useState(false);
 
 	const generateInvoice = async () => {
+		const uuid = await uuidv4();
+		const invoiceNumber = uuid.replace(/\D/g, '').slice(0, 10);
+
 		setLoading(true);
 		setError(null);
 		try {
@@ -50,7 +49,7 @@ const InvoiceGeneratorModal: React.FC<InvoiceModalProps> = ({ data, onClose }) =
 				from: 'Nikolaus Ltd',
 				to: 'Acme, Corp.',
 				logo: 'https://example.com/img/logo-invoice.png',
-				number: 1,
+				number: invoiceNumber,
 				items: [{ name: 'Starter plan', quantity: 1, unit_cost: 99 }],
 				notes: 'Thanks for your business!',
 			};
@@ -78,6 +77,7 @@ const InvoiceGeneratorModal: React.FC<InvoiceModalProps> = ({ data, onClose }) =
 	};
 
 	useEffect(()=>{
+		console.log(data)
 		generateInvoice()
 	}, [])
 
