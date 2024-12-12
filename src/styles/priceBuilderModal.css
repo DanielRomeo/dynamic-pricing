@@ -1,0 +1,9 @@
+.modal-content{
+    border-radius: 5px;
+}
+
+.modal-content .modal-header .btn-close{
+    background-color: #EAB613;
+    border: 1px solid black;
+}
+

@@ -6,6 +6,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Accordion, FormCheck } from 'react-bootstrap';
 import InvoiceGeneratorModal from './InvoiceGenerator';
+import styles from '../styles/priceBuilder.module.scss'
+import '../styles/priceBuilderModal.css'
 
 interface PriceBuilderModalProps {
 	onClose: () => void;
@@ -54,6 +56,10 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 	const [selectedItems, setSelectedItems] = useState<{ [key: string]: string[] }>({});
 	const [totalPrice, setTotalPrice] = useState(0);
 	const [category, setCategory] = useState<string>(categoryId);
+
+	// accordion key persistence for the styling:
+	const [activeAccordionKey, setActiveAccordionKey] = useState(null);
+
 
 	// Invoice modal display code:
 	const [showModal, setShowModal] = useState(false);
@@ -104,7 +110,6 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 
 	// Calculate total price whenever selected items change
 	useEffect(() => {
-		// console.log(props.categoryId)
 		let total = 0;
 		pricingData.forEach((element) => {
 			const categoryName = element.name;
@@ -189,13 +194,13 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 
 	return (
 		<>
-			<Modal show={true} className="modal-xl" onHide={onClose}>
-				<Modal.Header closeButton>
-					<Modal.Title>Price Builder</Modal.Title>
+			<Modal  show={true} className={`${styles.modal} modal-xl`} onHide={onClose}>
+				<Modal.Header className={`${styles.modalHeader}`} closeButton>
+					<Modal.Title className={`${styles.modalTitle}`}>Select items to be cleaned!</Modal.Title>
 				</Modal.Header>
-				<Modal.Body>
+				<Modal.Body className={`${styles.modalBody}`}>
 					{/* Total Price Display */}
-					<div className="alert alert-info text-center mb-3">
+					<div className={`${styles.alert} alert alert-info text-center mb-3`}>
 						<strong>Total Price: R{totalPrice.toFixed(2)}</strong>
 					</div>
 
@@ -205,18 +210,23 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 								<p>Page 1/2</p>
 								<h4>Select items: </h4>
 								
-								<Accordion defaultActiveKey={[`${category}`]}>
+								<Accordion className={styles.accordion} defaultActiveKey={[`${category}`]}
+								
+								>
 									{pricingData?.length > 0 && !isLoading ? (
 										<div>
 											{pricingData.map((element, index) => (
 												<Accordion.Item
+													className={`${styles.accordionItem}`}
 													key={index}
 													eventKey={String(index)}
 												>
-													<Accordion.Header>
+													<Accordion.Header className={styles.accordionHeader}>
 														{element.name}
 													</Accordion.Header>
-													<Accordion.Body>
+													<Accordion.Body 
+														className={`${styles.accordionBody}`}
+													>
 														{element.sizes
 															? element.sizes.map(
 																	(size: string, i: number) => (

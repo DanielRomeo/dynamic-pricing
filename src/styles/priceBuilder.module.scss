@@ -1,0 +1,47 @@
+.modal{
+
+    .modalHeader{
+        .modalTitle{
+            font-weight: bold;
+        }
+    }
+
+    .modalBody{
+        .alert{
+            border: 0px;
+            background-color: black;
+
+            strong{
+                color: white;
+            }
+        }
+
+
+        .accordion {
+            .accordionItem {
+                .accordionHeader {
+                    button {
+                        border-radius: 0px;
+                        padding: 15px;
+                        display: flex;
+                        align-items: center;
+                        font-weight: 600;
+                        transition: all 0.3s ease;
+
+                        &:focus,&:active {
+                            background-color: #EAB613;
+                            box-shadow: 0 4px 15px rgba(235, 180, 12, 0.5);
+                            outline: none;
+                        }
+                        
+                    }
+                }
+
+                .accordionBody {
+                   // no styling needed yet
+                }
+            }
+        }
+    }
+}
+
