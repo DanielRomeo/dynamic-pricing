@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import styles from '../styles/pricing.module.scss';
+import styles from '../styles/priceBoxes.module.scss';
 import PriceBuilderModal from './_PriceBuilder3';
 import InvoiceGeneratorModal from './InvoiceGenerator';
 import pricingArray from './pricingDataComponent';
@@ -58,40 +58,44 @@ function PriceBoxes() {
 				{pricingData.map((element, index: number) => (
 					
 						<Col md={4} lg={4} sm={12}>
-							<Card className={styles['pricing-card']}>
-								<Card.Header>{element.name}</Card.Header>
+							<Card className={styles.card}>
+								<Card.Header className={styles.cardHeader}>
+									<h2 className={styles.title}>{element.name}</h2>
+								</Card.Header>
 								{/* We render a different card body depending on if the card has sizes or bedroom numbers */}
 								
-								<Card.Body>
+								<Card.Body className={styles.cardBody}>
 									<Container>
 										{element.sizes ? (
 											<Row>
-												<Col md={6}>Sizes</Col>
-												<Col md={6}>Prices</Col>
+												<Col lg={7} md={7} sm={7}><h6 className={styles.contentHeaders}>Sizes</h6></Col>
+												<Col lg={5} md={5} sm={5}><h6 className={styles.contentHeaders}>Prices</h6></Col>
+												
+												
 												{element.sizes.map((size: string, i: number) => (
-													<Row>
-														<Col md={6}>{size}</Col>
-														<Col md={6}>{element.prices[i]}</Col>
-													</Row>
+													<>
+														<Col  lg={7} md={7} sm={7}><p className={styles.contentTexts}>{size}</p></Col>
+														<Col  lg={5} md={5} sm={5}><p className={styles.contentTexts}>R{element.prices[i]}</p></Col>
+													</>
 												))}
 											</Row>
 										) : (
 											<Row>
-												<Col md={6}>Bedrooms</Col>
-												<Col md={6}>Prices</Col>
+												<Col lg={7} md={7} sm={7}><h6 className={styles.contentHeaders}>#Bedrooms</h6></Col>
+												<Col lg={5} md={5} sm={5}><h6 className={styles.contentHeaders}>Prices</h6></Col>
 												{element.bedrooms?.map((bedroom: string, i: number) => (
-													<Row>
-														<Col md={6}>{bedroom}</Col>
-														<Col md={6}>{element.prices[i]}</Col>
-												</Row>
+													<>
+														<Col lg={7} md={7} sm={7}><p className={styles.contentTexts}>{bedroom}</p></Col>
+														<Col lg={5} md={5} sm={5}><p className={styles.contentTexts}>R{element.prices[i]}</p></Col>
+													</>
 												))}
 											</Row>
 										)}
 									</Container>
 								</Card.Body>
 
-								<Card.Footer>
-									<Button onClick={()=> handleOpenModal(index)}>Book now!</Button>
+								<Card.Footer className={styles.cardFooter}>
+									<Button className={styles.colorpickerButton} onClick={()=> handleOpenModal(index)}>Book now!</Button>
 								</Card.Footer>
 							</Card>
 

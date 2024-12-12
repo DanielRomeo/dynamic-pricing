@@ -1,6 +1,6 @@
 let pricingArray = [
 	{
-		name: 'rugs',
+		name: 'Rugs',
 		sizes: [
 			'160cm (W) x 230xm (L)',
 			'200cm (W) x 290xm (L)',
@@ -10,27 +10,27 @@ let pricingArray = [
 		prices: [350, 400, 500, 550],
 	},
 	{
-		name: 'mattresses',
+		name: 'Mattresses',
 		sizes: ['Single', 'Double', 'Queen', 'King/+'],
 		prices: [400, 460, 520, 620],
 	},
 	{
-		name: 'couches',
+		name: 'Couches',
 		sizes: ['1 Seater', '2 Seater', '3 Seater', '4 Seater', '5 Seater', '6 Seater'],
 		prices: [350, 400, 500, 600, 700, 800],
 	},
 	{
-		name: 'houseCleaningOnce',
+		name: 'House cleaning (Once off/1 day)',
 		bedrooms: [1, 2, 3, 4],
 		prices: [600, 1200, 1800, 2400],
 	},
 	{
-		name: 'beforeAfterMoving',
+		name: 'Before/After moving house cleaning',
 		bedrooms: [1, 2, 3, 4],
 		prices: [650, 1350, 1900, 2650],
 	},
 	{
-		name: 'windows',
+		name: 'Windows',
 		sizes: [
 			'Single hung or ground floor',
 			'Double hung or second floor',
@@ -42,7 +42,7 @@ let pricingArray = [
 		prices: [100, 140, 150, 180, 220, 'Contact us'],
 	},
 	{
-		name: 'cars',
+		name: 'Cars (Valet)',
 		sizes: [
 			'Hatchback/Sedan',
 			'Single cab bakkie',
