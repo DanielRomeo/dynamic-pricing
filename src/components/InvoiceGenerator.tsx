@@ -12,6 +12,7 @@ import {
 } from 'react-bootstrap';
 import axios from 'axios';
 import { MY_ENV_VAR } from '../config/config';
+import styles from '../styles/invoiceGenerator.module.scss'
 
 // information I need from client:
 /*
@@ -76,16 +77,18 @@ const InvoiceGeneratorModal: React.FC<InvoiceModalProps> = ({ data, onClose }) =
 		}
 	};
 
+	useEffect(()=>{
+		generateInvoice()
+	}, [])
+
 	return (
-		<Modal show={true} className="modal-xl" onHide={onClose}>
-			<Modal.Header closeButton>
-				<Modal.Title>Invoice Generator</Modal.Title>
-			</Modal.Header>
-			<Modal.Body>
-				<h1>Generate Invoice</h1>
-				<Button onClick={generateInvoice} disabled={loading}>
-					{loading ? <Spinner animation="border" size="sm" /> : 'Generate Invoice'}
-				</Button>
+		<>
+		<Modal show={true} className={`${styles.modalInvoiceGen} modal-xl`} onHide={onClose}>
+			
+			<Modal.Body className={styles.modalBody}>
+				{loading ? <Spinner animation="border" size="sm" /> : ' '}
+
+
 				{error && <p style={{ color: 'red' }}>Error: {JSON.stringify(error)}</p>}
 				{pdfUrl ? (
 					<div style={{ marginTop: '20px' }}>
@@ -102,19 +105,27 @@ const InvoiceGeneratorModal: React.FC<InvoiceModalProps> = ({ data, onClose }) =
 								<a href={pdfUrl}>Download the PDF</a>.
 							</p>
 						</object>
-						{/* Alternatively, you can use <embed> */}
-						{/* <embed src={pdfUrl} type="application/pdf" width="100%" height="500px" /> */}
+						
+						<hr />
+
+							<div className="d-flex justify-content-between">
+								<Button className={styles.cancelButton} variant="primary"  onClick={onClose}>
+									Cancel
+								</Button>
+								<Button className={styles.bookNowButton} type="submit" variant="primary">
+									BOOK NOW !
+								</Button>
+							</div>
 					</div>
 				) : (
-					loading && <p>Loading...</p>
+					loading && <p>Generating Invoice!</p>
 				)}
+
+				
 			</Modal.Body>
-			<Modal.Footer>
-				<Button variant="secondary" onClick={onClose}>
-					Close
-				</Button>
-			</Modal.Footer>
+
 		</Modal>
+		</>
 	);
 };
 
