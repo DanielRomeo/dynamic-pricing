@@ -182,7 +182,7 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 
 		// Your submit logic here
 		// For example, you might want to send this data to an API
-		onDataRecieve([selectedItems, data, totalPrice]);
+		onDataRecieve([selectedItemsWithPrices, data, totalPrice]);
 
 		onClose();
 	};

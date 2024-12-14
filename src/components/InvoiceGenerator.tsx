@@ -37,21 +37,54 @@ const InvoiceGeneratorModal: React.FC<InvoiceModalProps> = ({ data, onClose }) =
 	const [pdfUrl, setPdfUrl] = useState<string | null>(null);
 	const [error, setError] = useState<string | null>(null);
 	const [loading, setLoading] = useState(false);
+	const [itemsArray, setItemsArray] = useState<any[]>(data)
 
-	const generateInvoice = async () => {
+	const generateInvoice = async (data2:any) => {
 		const uuid = await uuidv4();
 		const invoiceNumber = uuid.replace(/\D/g, '').slice(0, 10);
 
+		// date:
+		const today = new Date();
+		const formattedDate = today.toLocaleDateString('en-GB');
+
 		setLoading(true);
 		setError(null);
+
+		// populate the items with the data
+		// console.log(`data is ${data2[0][0]}`)
+		// console.log(itemsArray[0])
+		let items= [];
+		// console.log(itemsArray[0][0])
+		console.log('``````````````````````````````````````');
+		console.log(itemsArray[0][0])
+
+		let typeOfEnvironment :string;
+		for(let i =0 ; i < itemsArray[0].length; i++){
+			if(itemsArray[0][i].category === 'Before/After moving house cleaning' || itemsArray[0][i].category === 'House cleaning (Once off/1 day)'){
+				items.push({ name: `${itemsArray[0][i].category} - ${itemsArray[0][i].size} bedrooms`, quantity: 1, unit_cost: itemsArray[0][i].price })
+			}else{
+				items.push({ name: `${itemsArray[0][i].category} - ${itemsArray[0][i].size}`, quantity: 1, unit_cost: itemsArray[0][i].price })
+
+			}
+
+			console.log(itemsArray[0][i])
+		}
+
 		try {
 			const invoiceData = {
-				from: 'Nikolaus Ltd',
-				to: 'Acme, Corp.',
+				from: 'Royal Cleaners',
+				to: data[1].name,
 				logo: 'https://example.com/img/logo-invoice.png',
 				number: invoiceNumber,
-				items: [{ name: 'Starter plan', quantity: 1, unit_cost: 99 }],
+				// items: [
+				// 	// { name: `${itemsArray[0].category} - ${itemsArray[0].size}`, quantity: 1, unit_cost: itemsArray[0].price },
+				// 	// { name: 'Starter plan', quantity: 1, unit_cost: 99 }
+					
+				// ],
+				items: items,
 				notes: 'Thanks for your business!',
+				date: formattedDate,
+				terms: "Payment method: \n FNB \n 908943543 \n Royal Cleaners Co \n  "
 			};
 
 			const response = await axios.post(
@@ -77,8 +110,8 @@ const InvoiceGeneratorModal: React.FC<InvoiceModalProps> = ({ data, onClose }) =
 	};
 
 	useEffect(()=>{
-		console.log(data)
-		generateInvoice()
+		// console.log(data)
+		generateInvoice(data)
 	}, [])
 
 	return (
