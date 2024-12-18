@@ -9,17 +9,17 @@ require('dotenv').config();
 
 // Validate environment
 const requiredEnvVars = ['PORT', 'ALL1','ALL2','ALL3', 'NODE_ENV'];
-// requiredEnvVars.forEach(envVar => {
-//     if (!process.env[envVar]) {
-//         console.error(`Error: ${envVar} is not set`);
-//         process.exit(1);
-//     }
-// });
+requiredEnvVars.forEach(envVar => {
+    if (!process.env[envVar]) {
+        console.error(`Error: ${envVar} is not set`);
+        process.exit(1);
+    }
+});
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-console.log(process.env.API_KEY);          // should log: sk_RpHK71x5NLo2jyawxJf2f2j48BBwKL2t
+console.log(process.env.API_KEY); 
 
 
 app.use((err, req, res, next) => {
@@ -96,7 +96,7 @@ process.on('uncaughtException', (error) => {
 // Routes
 app.get('/message', (req, res) => {
     res.json({
-        message: "Hello! This is a simple message response."
+        message: "ROMEO DANIEL SAYS HELLO!!!"
     });
 });
 
