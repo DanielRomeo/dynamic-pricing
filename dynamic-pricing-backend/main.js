@@ -19,6 +19,9 @@ requiredEnvVars.forEach(envVar => {
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+console.log(process.env.API_KEY);          // should log: sk_RpHK71x5NLo2jyawxJf2f2j48BBwKL2t
+
+
 app.use((err, req, res, next) => {
     console.error('Detailed error:', {
         message: err.message,
