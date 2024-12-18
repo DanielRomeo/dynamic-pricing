@@ -44,9 +44,10 @@ app.use(limiter);
 const corsOptions = {
 	origin: [
 		'http://localhost:3000',
-		'http://localhost:3000/',
-		'https://dynamic-pricing-xcee.onrender.com/',
-		'https://dynamic-pricing-delta.vercel.app/'
+		'http://localhost:3000',
+		'https://dynamic-pricing-xcee.onrender.com',
+		'https://dynamic-pricing-delta.vercel.app',
+		'https://dynamic-pricing-delta.vercel.app/generate-invoice'
 	],
 	methods: ['GET', 'POST', 'PUT', 'DELETE'],
 	allowedHeaders: ['Content-Type', 'Authorization'],
