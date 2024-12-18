@@ -8,7 +8,7 @@ const axios = require('axios');
 require('dotenv').config();
 
 // Validate environment
-const requiredEnvVars = ['PORT', 'ALLOWED_ORIGINS', 'NODE_ENV'];
+const requiredEnvVars = ['PORT', 'ALLOWED_ORIGINS1','ALLOWED_ORIGINS2','ALLOWED_ORIGINS3', 'NODE_ENV'];
 requiredEnvVars.forEach(envVar => {
     if (!process.env[envVar]) {
         console.error(`Error: ${envVar} is not set`);
@@ -18,6 +18,14 @@ requiredEnvVars.forEach(envVar => {
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+app.use((err, req, res, next) => {
+    console.error('Detailed error:', {
+        message: err.message,
+        stack: err.stack,
+        status: err.status
+    });
+});
 
 // Security middleware
 app.use(helmet());
