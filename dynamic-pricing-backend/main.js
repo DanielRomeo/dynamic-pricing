@@ -1,23 +1,91 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const compression = require('compression');
 const axios = require('axios');
 require('dotenv').config();
+
+// Validate environment
+const requiredEnvVars = ['PORT', 'ALLOWED_ORIGINS', 'NODE_ENV'];
+requiredEnvVars.forEach(envVar => {
+    if (!process.env[envVar]) {
+        console.error(`Error: ${envVar} is not set`);
+        process.exit(1);
+    }
+});
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
-app.use(
-	cors({
-		origin: 'http://localhost:3000', // Adjust to your frontend's URL
-		methods: ['POST'],
-		allowedHeaders: ['Content-Type', 'Authorization'],
-	})
-);
-app.use(bodyParser.json());
+// Security middleware
+app.use(helmet());
 
+// Rate limiting
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100
+});
+app.use(limiter);
+
+// CORS configuration
+app.use(cors({
+    origin: process.env.ALLOWED_ORIGINS.split(','),
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+    maxAge: 86400
+}));
+
+// Body parser with limits
+app.use(bodyParser.json({
+    limit: '10mb',
+    verify: (req, res, buf) => {
+        req.rawBody = buf
+    }
+}));
+
+// Compression
+app.use(compression());
+
+// Health check
+app.get('/health', (req, res) => {
+    res.status(200).json({
+        status: 'healthy',
+        timestamp: new Date().toISOString()
+    });
+});
+
+// Global error handler
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(err.status || 500).json({
+        error: process.env.NODE_ENV === 'production' 
+            ? 'Internal server error' 
+            : err.message
+    });
+});
+
+// Handle uncaught errors
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
+process.on('uncaughtException', (error) => {
+    console.error('Uncaught Exception:', error);
+    // Graceful shutdown
+    process.exit(1);
+});
+
+// ------------------------------------------------------------------------------------
 // Routes
+app.get('/message', (req, res) => {
+    res.json({
+        message: "Hello! This is a simple message response."
+    });
+});
+
 app.post('/generate-invoice', async (req, res) => {
 	console.log('Invoice generation request received');
 
