@@ -6,8 +6,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Accordion, FormCheck } from 'react-bootstrap';
 import InvoiceGeneratorModal from './InvoiceGenerator';
-import styles from '../styles/priceBuilder.module.scss'
-import '../styles/priceBuilderModal.css'
+import styles from '../styles/priceBuilder.module.scss';
+import '../styles/priceBuilderModal.css';
 
 interface PriceBuilderModalProps {
 	onClose: () => void;
@@ -48,7 +48,11 @@ const validationSchema = yup.object({
 		.required('Payment terms must be selected'),
 });
 
-const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRecieve, categoryId }) => {
+const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({
+	onClose,
+	onDataRecieve,
+	categoryId,
+}) => {
 	// state:
 	const [pricingData, setPricingData] = useState<any[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
@@ -59,7 +63,6 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 
 	// accordion key persistence for the styling:
 	const [activeAccordionKey, setActiveAccordionKey] = useState(null);
-
 
 	// Invoice modal display code:
 	const [showModal, setShowModal] = useState(false);
@@ -93,7 +96,7 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 
 	// useEffect to fetch data:
 	useEffect(() => {
-		console.log(category)
+		// console.log(category)
 		const fetchPricingData = async () => {
 			setIsLoading(true);
 			try {
@@ -176,9 +179,10 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 			});
 		});
 
-		console.log('Selected items with prices:', selectedItemsWithPrices);
-		console.log('Form data:', data);
-		console.log('Total Price:', totalPrice);
+		// uncomment only when testing:
+		// console.log('Selected items with prices:', selectedItemsWithPrices);
+		// console.log('Form data:', data);
+		// console.log('Total Price:', totalPrice);
 
 		// Your submit logic here
 		// For example, you might want to send this data to an API
@@ -194,9 +198,11 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 
 	return (
 		<>
-			<Modal  show={true} className={`${styles.modal} modal-xl`} onHide={onClose}>
+			<Modal show={true} className={`${styles.modal} modal-xl`} onHide={onClose}>
 				<Modal.Header className={`${styles.modalHeader}`} closeButton>
-					<Modal.Title className={`${styles.modalTitle}`}>Select items to be cleaned!</Modal.Title>
+					<Modal.Title className={`${styles.modalTitle}`}>
+						Select items to be cleaned!
+					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body className={`${styles.modalBody}`}>
 					{/* Total Price Display */}
@@ -209,9 +215,10 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 							<Form onSubmit={onSubmitFirstStep}>
 								<p>Page 1/2</p>
 								<h4>Select items: </h4>
-								
-								<Accordion className={styles.accordion} defaultActiveKey={[`${category}`]}
-								
+
+								<Accordion
+									className={styles.accordion}
+									defaultActiveKey={[`${category}`]}
 								>
 									{pricingData?.length > 0 && !isLoading ? (
 										<div>
@@ -221,10 +228,12 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 													key={index}
 													eventKey={String(index)}
 												>
-													<Accordion.Header className={styles.accordionHeader}>
+													<Accordion.Header
+														className={styles.accordionHeader}
+													>
 														{element.name}
 													</Accordion.Header>
-													<Accordion.Body 
+													<Accordion.Body
 														className={`${styles.accordionBody}`}
 													>
 														{element.sizes
@@ -284,7 +293,11 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 
 								<br />
 
-								<Button className={styles.firstPageNextButton} type="submit" variant="primary">
+								<Button
+									className={styles.firstPageNextButton}
+									type="submit"
+									variant="primary"
+								>
 									Next
 								</Button>
 							</Form>
@@ -340,7 +353,7 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 									<Form.Group controlId="formPhone" className="mb-3">
 										<Form.Label>Phone Number</Form.Label>
 										<Form.Control
-										className={`mb-3 ${styles.formField}`}
+											className={`mb-3 ${styles.formField}`}
 											{...field}
 											type="tel"
 											placeholder="Enter 10-digit phone number"
@@ -381,7 +394,7 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 									<Form.Group controlId="formAdditionalNotes" className="mb-3">
 										<Form.Label>Additional Notes (Optional)</Form.Label>
 										<Form.Control
-										className={`mb-3 ${styles.formField}`}
+											className={`mb-3 ${styles.formField}`}
 											{...field}
 											as="textarea"
 											rows={3}
@@ -397,8 +410,11 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 								render={({ field }) => (
 									<Form.Group controlId="formPaymentTerms" className="mb-3">
 										<Form.Label>Payment Terms</Form.Label>
-										<Form.Select {...field} isInvalid={!!errors.paymentTerms}
-										className={`mb-3 ${styles.formSelect}`}>
+										<Form.Select
+											{...field}
+											isInvalid={!!errors.paymentTerms}
+											className={`mb-3 ${styles.formSelect}`}
+										>
 											<option value="">Select Payment Terms</option>
 											<option value="EFT">EFT</option>
 											<option value="Cash">Cash</option>
@@ -411,13 +427,21 @@ const PriceBuilderModal: React.FC<PriceBuilderModalProps> = ({ onClose, onDataRe
 							/>
 
 							<div className="d-flex justify-content-between">
-								<Button className={styles.secondPagePreviousButton} variant="secondary" onClick={() => setCurrentStep(1)}>
+								<Button
+									className={styles.secondPagePreviousButton}
+									variant="secondary"
+									onClick={() => setCurrentStep(1)}
+								>
 									Previous
 								</Button>
-								<Button className={styles.secondPageCancelButton}  onClick={onClose}>
+								<Button className={styles.secondPageCancelButton} onClick={onClose}>
 									Cancel
 								</Button>
-								<Button className={styles.secondPageNextButton} type="submit" variant="primary">
+								<Button
+									className={styles.secondPageNextButton}
+									type="submit"
+									variant="primary"
+								>
 									Submit Order
 								</Button>
 							</div>

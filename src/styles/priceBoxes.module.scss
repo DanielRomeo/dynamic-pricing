@@ -1,59 +1,56 @@
 .card {
-    max-width: 390px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    box-shadow: 
-    4px 0 6px -3px rgba(0,0,0,0.2), /* Right shadow */
-    -4px 0 6px -3px rgba(60, 34, 34, 0.2), /* Left shadow */
-    0 4px 6px -3px rgba(164, 160, 160, 0.2); /* Bottom shadow */
-    
-    .cardHeader {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #EAB613;
-        color: #343a40;
-        min-height: 100px;
-        border-radius: 2%;
+	max-width: 370px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	margin-bottom: 20px;
+	box-shadow:
+		4px 0 6px -3px rgba(0, 0, 0, 0.2),
+		/* Right shadow */ -4px 0 6px -3px rgba(60, 34, 34, 0.2),
+		/* Left shadow */ 0 4px 6px -3px rgba(164, 160, 160, 0.2); /* Bottom shadow */
 
-        .title{
-            // font-weight: normal;
-            // font-weight: 500;
-            text-decoration: none;
-        }
-    }
+	.cardHeader {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: #eab613;
+		color: #343a40;
+		min-height: 100px;
+		border-radius: 2%;
 
-    .cardBody{
-        padding-bottom: 0px;
-        .contentHeaders{
-            // color: green;
-            font-weight: bold;
-            font-size: 20px;
-            color: rgb(88, 88, 88);
-        }
+		.title {
+			text-decoration: none;
+		}
+	}
 
-        .contentTexts{
-            font-size: 13px;
-        }
-    }
+	.cardBody {
+		padding-bottom: 0px;
+		.contentHeaders {
+			font-weight: bold;
+			font-size: 20px;
+			color: rgb(88, 88, 88);
+		}
 
-    .cardFooter{
-        border: 0px;
-        background-color: inherit;
-        display: flex;
-        justify-content: center;
-        padding-top: 0px;
+		.contentTexts {
+			font-size: 13px;
+		}
+	}
 
-        .colorpickerButton{
-            background-color: #039BE5;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-    }
+	.cardFooter {
+		border: 0px;
+		background-color: inherit;
+		display: flex;
+		justify-content: center;
+		padding-top: 0px;
 
-    .table {
-        margin-bottom: 0;
-    }
+		.colorpickerButton {
+			background-color: #039be5;
+			font-weight: bold;
+			margin-bottom: 15px;
+		}
+	}
+
+	.table {
+		margin-bottom: 0;
+	}
 }

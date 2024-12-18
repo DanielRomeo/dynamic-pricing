@@ -8,26 +8,25 @@ const axios = require('axios');
 require('dotenv').config();
 
 // Validate environment
-const requiredEnvVars = ['PORT', 'ALL1','ALL2','ALL3', 'NODE_ENV'];
-requiredEnvVars.forEach(envVar => {
-    if (!process.env[envVar]) {
-        console.error(`Error: ${envVar} is not set`);
-        process.exit(1);
-    }
+const requiredEnvVars = ['PORT', 'ALL1', 'ALL2', 'ALL3', 'ALL4', 'NODE_ENV'];
+requiredEnvVars.forEach((envVar) => {
+	if (!process.env[envVar]) {
+		console.error(`Error: ${envVar} is not set`);
+		process.exit(1);
+	}
 });
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-console.log(process.env.API_KEY); 
-
+console.log(process.env.API_KEY);
 
 app.use((err, req, res, next) => {
-    console.error('Detailed error:', {
-        message: err.message,
-        stack: err.stack,
-        status: err.status
-    });
+	console.error('Detailed error:', {
+		message: err.message,
+		stack: err.stack,
+		status: err.status,
+	});
 });
 
 // Security middleware
@@ -35,69 +34,74 @@ app.use(helmet());
 
 // Rate limiting
 const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 100
+	windowMs: 15 * 60 * 1000,
+	max: 100,
 });
 app.use(limiter);
 
 // CORS configuration
 // Default to allowing localhost in development, or specify origins in production
 const corsOptions = {
-    origin: ['http://localhost:3000', 'http://localhost:3000/', 'https://dynamic-pricing-xcee.onrender.com/'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-    maxAge: 86400
+	origin: [
+		'http://localhost:3000',
+		'http://localhost:3000/',
+		'https://dynamic-pricing-xcee.onrender.com/',
+		'https://dynamic-pricing-delta.vercel.app/'
+	],
+	methods: ['GET', 'POST', 'PUT', 'DELETE'],
+	allowedHeaders: ['Content-Type', 'Authorization'],
+	credentials: true,
+	maxAge: 86400,
 };
 
 app.use(cors(corsOptions));
 
 // Body parser with limits
-app.use(bodyParser.json({
-    limit: '10mb',
-    verify: (req, res, buf) => {
-        req.rawBody = buf
-    }
-}));
+app.use(
+	bodyParser.json({
+		limit: '10mb',
+		verify: (req, res, buf) => {
+			req.rawBody = buf;
+		},
+	})
+);
 
 // Compression
 app.use(compression());
 
 // Health check
 app.get('/health', (req, res) => {
-    res.status(200).json({
-        status: 'healthy',
-        timestamp: new Date().toISOString()
-    });
+	res.status(200).json({
+		status: 'healthy',
+		timestamp: new Date().toISOString(),
+	});
 });
 
 // Global error handler
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(err.status || 500).json({
-        error: process.env.NODE_ENV === 'production' 
-            ? 'Internal server error' 
-            : err.message
-    });
+	console.error(err.stack);
+	res.status(err.status || 500).json({
+		error: process.env.NODE_ENV === 'production' ? 'Internal server error' : err.message,
+	});
 });
 
 // Handle uncaught errors
 process.on('unhandledRejection', (reason, promise) => {
-    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+	console.error('Unhandled Rejection at:', promise, 'reason:', reason);
 });
 
 process.on('uncaughtException', (error) => {
-    console.error('Uncaught Exception:', error);
-    // Graceful shutdown
-    process.exit(1);
+	console.error('Uncaught Exception:', error);
+	// Graceful shutdown
+	process.exit(1);
 });
 
 // ------------------------------------------------------------------------------------
 // Routes
 app.get('/message', (req, res) => {
-    res.json({
-        message: "ROMEO DANIEL SAYS HELLO!!!"
-    });
+	res.json({
+		message: 'ROMEO DANIEL SAYS HELLO!!!',
+	});
 });
 
 app.post('/generate-invoice', async (req, res) => {

@@ -1,25 +1,25 @@
-.modalInvoiceGen{
-    .modalBody{
-        .cancelButton{
-            background-color: black;
-            border: 1px solid black;
-            color: white;
-            height: 38px;
+.modalInvoiceGen {
+	.modalBody {
+		.cancelButton {
+			background-color: black;
+			border: 1px solid black;
+			color: white;
+			height: 38px;
 
-            &:hover{
-                box-shadow: 0 4px 15px rgba(80, 77, 70, 0.5);
-                background-color: black;
-            }
-        }
-        .bookNowButton{
-            background-color: #039BE5;
-            font-weight: bold;
-            margin-bottom: 15px;
-            border: 1px solid #039BE5;
+			&:hover {
+				box-shadow: 0 4px 15px rgba(80, 77, 70, 0.5);
+				background-color: black;
+			}
+		}
+		.bookNowButton {
+			background-color: #039be5;
+			font-weight: bold;
+			margin-bottom: 15px;
+			border: 1px solid #039be5;
 
-            &:hover{
-                box-shadow: 0 4px 15px rgba(90, 169, 193, 0.5);
-            }
-        }
-    }
+			&:hover {
+				box-shadow: 0 4px 15px rgba(90, 169, 193, 0.5);
+			}
+		}
+	}
 }

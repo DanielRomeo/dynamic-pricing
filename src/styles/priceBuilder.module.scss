@@ -1,96 +1,97 @@
-.modal{
+.modal {
+	.modalHeader {
+		.modalTitle {
+			font-weight: bold;
+		}
+	}
 
-    .modalHeader{
-        .modalTitle{
-            font-weight: bold;
-        }
-    }
+	.modalBody {
+		.alert {
+			border: 0px;
+			background-color: black;
 
-    .modalBody{
-        .alert{
-            border: 0px;
-            background-color: black;
+			strong {
+				color: white;
+			}
+		}
 
-            strong{
-                color: white;
-            }
-        }
+		.accordion {
+			.accordionItem {
+				.accordionHeader {
+					button {
+						// border-radius: 1px;
+						padding: 15px;
+						display: flex;
+						align-items: center;
+						font-weight: 600;
+						transition: all 0.3s ease;
 
-        .accordion {
-            .accordionItem {
-                .accordionHeader {
-                    button {
-                        // border-radius: 1px;
-                        padding: 15px;
-                        display: flex;
-                        align-items: center;
-                        font-weight: 600;
-                        transition: all 0.3s ease;
+						&:focus,
+						&:active {
+							background-color: #eab613;
+							box-shadow: 0 4px 15px rgba(235, 180, 12, 0.5);
+							outline: none;
+						}
+					}
+				}
 
-                        &:focus,&:active {
-                            background-color: #EAB613;
-                            box-shadow: 0 4px 15px rgba(235, 180, 12, 0.5);
-                            outline: none;
-                        }
-                        
-                    }
-                }
+				.accordionBody {
+					// no styling needed yet
+				}
+			}
+		}
+	}
 
-                .accordionBody {
-                   // no styling needed yet
-                }
-            }
-        }
-    }
+	.firstPageNextButton,
+	.secondPageNextButton,
+	.secondPagePreviousButton {
+		background-color: #eab613;
+		border-radius: 6px;
+		border: 1px solid #eab613;
+		color: white;
 
-    .firstPageNextButton, .secondPageNextButton, .secondPagePreviousButton{
-        background-color: #EAB613;
-        border-radius: 6px;
-        border: 1px solid #EAB613;
-        color: white;
+		&:hover {
+			box-shadow: 0 4px 15px rgba(235, 180, 12, 0.5);
+			background-color: #eab613;
+			border: 1px solid #eab613;
+		}
+	}
+	.secondPageCancelButton {
+		background-color: black;
+		border-radius: 6px;
+		border: 1px solid black;
+		color: white;
 
-        &:hover{
-            box-shadow: 0 4px 15px rgba(235, 180, 12, 0.5);
-            background-color: #EAB613;
-            border: 1px solid #EAB613;
-        }
-    }
-    .secondPageCancelButton{
-        background-color: black;
-        border-radius: 6px;
-        border: 1px solid black;
-        color: white;
+		&:hover {
+			box-shadow: 0 4px 15px rgba(80, 77, 70, 0.5);
+			background-color: black;
+		}
+	}
 
-        &:hover{
-            box-shadow: 0 4px 15px rgba(80, 77, 70, 0.5);
-            background-color: black;
-        }
-    }
+	// Form:
+	.formField {
+		border: 1px solid black;
 
-    // Form:
-    .formField{
-        border: 1px solid black;
+		&:focus {
+			box-shadow: 0 1px 10px #eab613;
+			border: 1px solid #eab613;
+		}
+	}
+	.formSelect {
+		border: 1px solid black;
 
-        &:focus{
-            box-shadow: 0 1px 10px #EAB613;
-            border: 1px solid #EAB613;
-        }
-    }
-    .formSelect{
-        border: 1px solid black;
-
-        &:focus{
-            box-shadow: 0 1px 10px #EAB613;
-            border: 1px solid #EAB613;
-        }
-    }
+		&:focus {
+			box-shadow: 0 1px 10px #eab613;
+			border: 1px solid #eab613;
+		}
+	}
 }
 
-.form-control.is-invalid, .was-validated .form-control:invalid {
-    border-color: var(--bs-form-invalid-border-color);
-    padding-right: calc(1.5em + 0.75rem);
-    background-repeat: no-repeat;
-    background-position: right calc(0.375em + 0.1875rem) center;
-    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+.form-control.is-invalid,
+.was-validated .form-control:invalid {
+	border-color: var(--bs-form-invalid-border-color);
+	padding-right: calc(1.5em + 0.75rem);
+	background-repeat: no-repeat;
+	background-position: right calc(0.375em + 0.1875rem) center;
+	background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
 }
-
