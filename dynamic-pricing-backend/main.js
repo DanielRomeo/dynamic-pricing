@@ -32,9 +32,7 @@ app.use(limiter);
 // CORS configuration
 // Default to allowing localhost in development, or specify origins in production
 const corsOptions = {
-    origin: process.env.ALLOWED_ORIGINS 
-        ? process.env.ALLOWED_ORIGINS.split(',')
-        : ['http://localhost:3000', 'http://localhost:3000/', 'https://dynamic-pricing-xcee.onrender.com/'],
+    origin: ['http://localhost:3000', 'http://localhost:3000/', 'https://dynamic-pricing-xcee.onrender.com/'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
