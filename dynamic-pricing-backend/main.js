@@ -30,13 +30,18 @@ const limiter = rateLimit({
 app.use(limiter);
 
 // CORS configuration
-app.use(cors({
-    origin: process.env.ALLOWED_ORIGINS.split(','),
+// Default to allowing localhost in development, or specify origins in production
+const corsOptions = {
+    origin: process.env.ALLOWED_ORIGINS 
+        ? process.env.ALLOWED_ORIGINS.split(',')
+        : ['http://localhost:3000', 'http://localhost:3000/', 'https://dynamic-pricing-xcee.onrender.com/'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
     maxAge: 86400
-}));
+};
+
+app.use(cors(corsOptions));
 
 // Body parser with limits
 app.use(bodyParser.json({
