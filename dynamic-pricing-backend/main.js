@@ -8,7 +8,7 @@ const axios = require('axios');
 require('dotenv').config();
 
 // Validate environment
-const requiredEnvVars = ['PORT', 'ALLOWED_ORIGINS1','ALLOWED_ORIGINS2','ALLOWED_ORIGINS3', 'NODE_ENV'];
+const requiredEnvVars = ['PORT', 'ALL1','ALL2','ALL3', 'NODE_ENV'];
 requiredEnvVars.forEach(envVar => {
     if (!process.env[envVar]) {
         console.error(`Error: ${envVar} is not set`);
