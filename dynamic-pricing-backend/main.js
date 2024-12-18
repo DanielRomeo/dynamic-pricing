@@ -9,12 +9,12 @@ require('dotenv').config();
 
 // Validate environment
 const requiredEnvVars = ['PORT', 'ALL1','ALL2','ALL3', 'NODE_ENV'];
-requiredEnvVars.forEach(envVar => {
-    if (!process.env[envVar]) {
-        console.error(`Error: ${envVar} is not set`);
-        process.exit(1);
-    }
-});
+// requiredEnvVars.forEach(envVar => {
+//     if (!process.env[envVar]) {
+//         console.error(`Error: ${envVar} is not set`);
+//         process.exit(1);
+//     }
+// });
 
 const app = express();
 const PORT = process.env.PORT || 5000;
