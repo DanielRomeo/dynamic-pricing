@@ -1,9 +1,14 @@
+
 .colSurroundingCard{
 	display: flex;
 	justify-content: center;
+	align-items: flex-start;
 }
 
 .card {
+	// display: block !important;
+	// justify-content: normal;
+
 	max-width: 370px;
 	display: flex;
 	flex-direction: column;
@@ -13,7 +18,9 @@
 		4px 0 6px -3px rgba(0, 0, 0, 0.2),
 		/* Right shadow */ -4px 0 6px -3px rgba(60, 34, 34, 0.2),
 		/* Left shadow */ 0 4px 6px -3px rgba(164, 160, 160, 0.2); /* Bottom shadow */
-
+	
+	// justify-content: normal;
+	
 	.cardHeader {
 		display: flex;
 		justify-content: center;
@@ -29,6 +36,7 @@
 	}
 
 	.cardBody {
+		
 		padding-bottom: 0px;
 		.contentHeaders {
 			font-weight: bold;
