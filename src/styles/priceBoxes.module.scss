@@ -6,9 +6,7 @@
 }
 
 .card {
-	// display: block !important;
-	// justify-content: normal;
-
+	
 	max-width: 370px;
 	display: flex;
 	flex-direction: column;
@@ -19,7 +17,6 @@
 		/* Right shadow */ -4px 0 6px -3px rgba(60, 34, 34, 0.2),
 		/* Left shadow */ 0 4px 6px -3px rgba(164, 160, 160, 0.2); /* Bottom shadow */
 	
-	// justify-content: normal;
 	
 	.cardHeader {
 		display: flex;
@@ -60,6 +57,11 @@
 			background-color: #039be5;
 			font-weight: bold;
 			margin-bottom: 15px;
+			border: 1px solid #039be5;
+
+			&:hover {
+				box-shadow: 0 4px 15px rgba(90, 169, 193, 0.5);
+			}
 		}
 	}
 
