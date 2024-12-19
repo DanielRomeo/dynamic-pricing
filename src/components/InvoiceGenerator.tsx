@@ -15,6 +15,7 @@ const InvoiceGeneratorModal: React.FC<InvoiceModalProps> = ({ data, onClose }) =
 	const [pdfUrl, setPdfUrl] = useState<string | null>(null);
 	const [error, setError] = useState<string | null>(null);
 	const [loading, setLoading] = useState(false);
+	const [bookingLoading, setBookingLoading] = useState(false);
 	const [itemsArray, setItemsArray] = useState<any[]>(data);
 
 	const generateInvoice = async (data2: any) => {
@@ -93,6 +94,29 @@ const InvoiceGeneratorModal: React.FC<InvoiceModalProps> = ({ data, onClose }) =
 		generateInvoice(data);
 	}, []);
 
+	// handle calendar booking:
+	const handleBooking = async () => {
+		setBookingLoading(true);
+		const SCOPES = 'https://www.googleapis.com/auth/calendar.events';
+		const calendarId = 'danielromeo99@gmail.com';
+		try {
+		  // Redirect to Google OAuth consent screen
+		  const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?
+			scope=${SCOPES}&
+			access_type=offline&
+			include_granted_scopes=true&
+			response_type=code&
+			redirect_uri=${window.location.origin}/calendar-callback&
+			client_id=595249108687-b3dnjneu65lrseirlnrfahg6gjlukkrc.apps.googleusercontent.com`;
+			
+		  window.location.href = googleAuthUrl;
+		} catch (error) {
+		  console.error('Error initiating calendar booking:', error);
+		} finally {
+		  setBookingLoading(false);
+		}
+	  };
+
 	return (
 		<>
 			<Modal
@@ -133,8 +157,10 @@ const InvoiceGeneratorModal: React.FC<InvoiceModalProps> = ({ data, onClose }) =
 									className={styles.bookNowButton}
 									type="submit"
 									variant="primary"
+									onClick={handleBooking}
+									disabled={bookingLoading}
 								>
-									BOOK NOW !
+									{bookingLoading ? 'Loading...' : 'BOOK NOW !'}
 								</Button>
 							</div>
 						</div>

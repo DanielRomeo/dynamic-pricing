@@ -54,7 +54,7 @@ function PriceBoxes() {
 		<div>
 			<Row>
 				{pricingData.map((element, index: number) => (
-					<Col md={4} lg={4} sm={12}>
+					<Col className={styles.colSurroundingCard} md={4} lg={4} sm={12}>
 						<Card className={styles.card}>
 							<Card.Header className={styles.cardHeader}>
 								<h2 className={styles.title}>{element.name}</h2>
@@ -65,21 +65,21 @@ function PriceBoxes() {
 								<Container>
 									{element.sizes ? (
 										<Row>
-											<Col lg={7} md={7} sm={7}>
+											<Col lg={7} md={7} sm={7} xs={6}>
 												<h6 className={styles.contentHeaders}>Sizes</h6>
 											</Col>
-											<Col lg={5} md={5} sm={5}>
+											<Col lg={5} md={5} sm={5} xs={6}>
 												<h6 className={styles.contentHeaders}>Prices</h6>
 											</Col>
 
 											{element.sizes.map((size: string, i: number) => (
 												<>
-													<Col lg={7} md={7} sm={7}>
+													<Col lg={7} md={7} sm={7} xs={6}>
 														<p className={styles.contentTexts}>
 															{size}
 														</p>
 													</Col>
-													<Col lg={5} md={5} sm={5}>
+													<Col lg={5} md={5} sm={5} xs={6}>
 														<p className={styles.contentTexts}>
 															R{element.prices[i]}
 														</p>
@@ -89,20 +89,20 @@ function PriceBoxes() {
 										</Row>
 									) : (
 										<Row>
-											<Col lg={7} md={7} sm={7}>
+											<Col lg={7} md={7} sm={7} xs={6}>
 												<h6 className={styles.contentHeaders}>#Bedrooms</h6>
 											</Col>
-											<Col lg={5} md={5} sm={5}>
+											<Col lg={5} md={5} sm={5} xs={6}>
 												<h6 className={styles.contentHeaders}>Prices</h6>
 											</Col>
 											{element.bedrooms?.map((bedroom: string, i: number) => (
 												<>
-													<Col lg={7} md={7} sm={7}>
+													<Col lg={7} md={7} sm={7} xs={6}>
 														<p className={styles.contentTexts}>
 															{bedroom}
 														</p>
 													</Col>
-													<Col lg={5} md={5} sm={5}>
+													<Col lg={5} md={5} sm={5} xs={6}>
 														<p className={styles.contentTexts}>
 															R{element.prices[i]}
 														</p>

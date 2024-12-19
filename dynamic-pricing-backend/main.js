@@ -99,6 +99,7 @@ process.on('uncaughtException', (error) => {
 
 // ------------------------------------------------------------------------------------
 // Routes
+// test route:
 app.get('/message', (req, res) => {
 	res.json({
 		message: 'ROMEO DANIEL SAYS HELLO!!!',
